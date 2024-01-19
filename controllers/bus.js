@@ -10,11 +10,11 @@ const busGet = async (req = request, res = response) => {
 }
 const busGetId = async (req = request, res = response) => {
     try {
-        // Cambia req.body por req.params para obtener el _id desde los parámetros de la URL
-        const { _id } = req.params;
+       
+        const { id } = req.params;
 
         // Utiliza findById para buscar el autobús por su _id
-        const bus = await Bus.findById(_id);
+        const bus = await Bus.findById(id);
 
         // Si no se encuentra el autobús, responde con un código 404
         if (!bus) {
