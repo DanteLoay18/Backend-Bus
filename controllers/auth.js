@@ -1,7 +1,7 @@
 const { response, request } = require("express");
 const bcryptjs = require('bcryptjs');
 const Usuario = require("../models/usuario");
-const { generarJWT } = require("../helpers/generar-jwt");
+const { generarJWT, validarToken } = require("../helpers/generar-jwt");
 
 
 
@@ -41,6 +41,24 @@ const login = async (req = request, res = response) => {
 
 }
 
+const autenticado = async (req = request, res = response) => {
+    
+    try {
+        const {uid} = await validarToken(req, res);
+        
+        const token = await generarJWT(uid);
+
+        return res.status(200).json({token})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            msg: 'Hable con el administrador'
+        })
+    }
+
+}
+
 module.exports = {
-    login
+    login,
+    autenticado
 }
