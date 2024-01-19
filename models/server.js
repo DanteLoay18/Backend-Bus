@@ -2,6 +2,7 @@ const express = require('express')
 const cors= require('cors');
 const { dbConnection } = require('../database/config');
 const fileUpload = require('express-fileupload');
+
 class Server{
 
     constructor(){
@@ -36,10 +37,10 @@ class Server{
         //Lectura y parseo del codigo
         this.app.use(express.json());
     }
+    
 
     routes(){
         this.app.use(this.paths.auth, require('../routes/auth'));
-
         this.app.use(this.paths.usuarios, require('../routes/usuarios'));
         this.app.use(this.paths.buses, require('../routes/bus'));
         this.app.use(this.paths.choferes,require('../routes/chofer'));

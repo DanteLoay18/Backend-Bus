@@ -3,7 +3,8 @@ const { Router } = require('express');
 const { choferGet,
         choferPost,
         choferPut,
-        choferDelete
+        choferDelete,
+        choferGetByID
       } = require('../controllers');
 
 
@@ -13,7 +14,9 @@ const router = Router();
 
 router.get('/', choferGet);
 
-router.put('/', choferPut);
+router.get('/:id', choferGetByID)
+
+router.put('/:id', choferPut);
 
 router.post('/', choferPost);
 

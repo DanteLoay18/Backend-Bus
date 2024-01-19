@@ -1,9 +1,11 @@
 const {Router} = require('express');
 
 const { busGet,
-        busPut, 
+        busPut,
+        busGetId, 
         busPost, 
-        busDelete
+        busDelete,
+        busDeleteAsientos
          } = require('../controllers');
 
     
@@ -11,12 +13,16 @@ const { busGet,
 
 const router= Router();
 
+router.get('/:id',busGetId);
+
 router.get('/', busGet);
 
-router.put('/', busPut);
+router.put('/:id', busPut);
 
 router.post('/', busPost );
 
 router.delete('/:id', busDelete  );
+
+router.delete('/:id/asientos', busDeleteAsientos);
 
 module.exports = router;

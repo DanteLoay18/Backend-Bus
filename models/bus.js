@@ -25,10 +25,10 @@ const BusSchema = new Schema({
     required: true,
   },
 });
-
-BusSchema.methods.toJSON = function() {
-  const {__v, _id, ...bus} = this.toObject();
-  bus.uid= _id;
+//esprit
+BusSchema.methods.toJSON = function () {
+  const { __v, _id, ...bus } = this.toObject();
+  bus.uid = _id;
   return bus;
 }
 

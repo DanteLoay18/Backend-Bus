@@ -14,6 +14,30 @@ const choferGet = async (req = request, res = response) => {
     });
   }
 };
+const choferGetByID = async (req = request, res = response) => {
+  try {
+    const { id } = req.params; // Obtener el ID del parámetro de la URL
+    const chofer = await Chofer.findById(id);
+
+    if (!chofer) {
+      return res.status(404).json({
+        success: false,
+        message: 'Chofer no encontrado',
+      });
+    }
+
+    res.json({
+      success: true,
+      chofer,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Error en el servidor',
+    });
+  }
+};
 
 const choferPost = async (req, res) => {
   try {
@@ -99,7 +123,9 @@ const choferDelete = async (req, res) => {
 
 module.exports = {
   choferGet,
+  choferGetByID,
   choferPost,
   choferPut,
   choferDelete,
+  
 };
