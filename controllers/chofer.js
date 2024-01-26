@@ -43,8 +43,16 @@ const choferPost = async (req, res) => {
   try {
     let { dni, nombre, fechaIngreso } = req.body;
 
+    // Verificar que fechaIngreso esté presente
+    if (!fechaIngreso) {
+      return res.status(400).json({
+        success: false,
+        message: 'La fecha de ingreso es obligatoria',
+      });
+    }
+
     const choferEncontrado = await Chofer.findOne({ dni });
- 
+
     if (choferEncontrado) {
       return res.status(404).json({
         success: false,
@@ -55,7 +63,7 @@ const choferPost = async (req, res) => {
     const chofer = new Chofer({ dni, nombre, fechaIngreso });
 
     await chofer.save();
-    //el error 201 confirma la solicitud completada
+
     res.status(201).json({
       success: true,
       message: 'Se registró el chofer correctamente',
@@ -69,15 +77,16 @@ const choferPost = async (req, res) => {
   }
 };
 
+
 const choferPut = async (req, res = response) => {
   try {
-  
     // Obtener los datos actualizados del chofer de req.body
-    const { id, nombre, dni, fechaIngreso } = req.body;
+    const { id } = req.params;
+    const { dni, nombre, fechaIngreso } = req.body;
 
     const choferEncontrado = await Chofer.findOne({ dni });
 
-    if(choferEncontrado !==null && choferEncontrado?.id !== id ){
+    if (choferEncontrado !== null && choferEncontrado?.id !==id) {
       res.status(400).json({
         success: true,
         message: 'El dni que ingreso ya existe',
@@ -85,13 +94,13 @@ const choferPut = async (req, res = response) => {
     }
 
     // Actualizar el chofer en la base de datos
-    await Chofer.findByIdAndUpdate(id, { nombre, dni, fechaIngreso });
+    await Chofer.findByIdAndUpdate(id, { dni, nombre, fechaIngreso });
 
     res.status(200).json({
       success: true,
       message: 'Se modificó el chofer correctamente',
     });
-
+    
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -101,10 +110,21 @@ const choferPut = async (req, res = response) => {
   }
 };
 
+
 const choferDelete = async (req, res) => {
   try {
     // Obtener el id del chofer de req.params o req.body según tu implementación
-    const { id } = req.params;
+    const {id} = req.params;
+    console.log(id);
+
+    // Verificar que el id esté presente
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'ID de chofer no proporcionado',
+      });
+    }
+
     // Eliminar el chofer de la base de datos
     await Chofer.findByIdAndDelete(id);
 

@@ -10,11 +10,11 @@ const busGet = async (req = request, res = response) => {
 }
 const busGetId = async (req = request, res = response) => {
     try {
-        // Cambia req.body por req.params para obtener el _id desde los parámetros de la URL
-        const { _id } = req.params;
+        // Cambia req.body por req.params para obtener el id desde los parámetros de la URL
+        const {id } = req.params;
 
-        // Utiliza findById para buscar el autobús por su _id
-        const bus = await Bus.findById(_id);
+        // Utiliza findById para buscar el autobús por su id
+        const bus = await Bus.findById(id);
 
         // Si no se encuentra el autobús, responde con un código 404
         if (!bus) {
@@ -84,7 +84,7 @@ const busPost = async (req, res) => {
 
 const busPut = async (req, res = response) => {
     try {
-        const { id } = req.params; // Obtener el _id del autobús desde los parámetros de la URL
+        const { id } = req.params; // Obtener el id del autobús desde los parámetros de la URL
         const { placa, marca, modelo, asientos } = req.body; // Obtener los datos actualizados del autobús de req.body
 
         // Verificar si el autobús existe
@@ -100,7 +100,7 @@ const busPut = async (req, res = response) => {
         busExistente.placa = placa;
         busExistente.marca = marca;
         busExistente.modelo = modelo;
-        busExistente.asientos = []; // Puedes ajustar esta parte según tu lógica
+        busExistente.asientos = []; 
 
         for (let i = 1; i <= asientos; i++) {
             busExistente.asientos.push({
